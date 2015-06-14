@@ -4,12 +4,12 @@
 			<div class="item item-divider">Stats</div>
 			<div class="item item-body">
 				<ul>
-					<li>Day: {{day}} Y{{year}}Q{{quarter}}</li>
-					<li>Capital: ${{capital}}</li>
-					<li>Users: {{users}}</li>
-					<li>Competitors: {{competitors}}</li>
-					<li>Market Share: {{marketShare}}%</li>
-					<li>Cost per User: ${{costPerUser}}</li>
+					<li>Day: {{ dash.game.day }} Y{{ dash.game.year }}Q{{ dash.game.quarter }}</li>
+					<li>Capital: {{ dash.startup.capital | currency: "$" : 0 }}</li>
+					<li>Users: {{ dash.startup.users }}</li>
+					<li>Competitors: {{ dash.startup.competitors }}</li>
+					<li>Market Share: {{ dash.startup.marketShare }}%</li>
+					<li>Cost per User: {{ dash.startup.costPerUser | currency }}</li>
 				</ul>
 			</div>
 		</div>

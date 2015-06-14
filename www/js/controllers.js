@@ -1,20 +1,29 @@
 (function () {
 
-function DashCtrl (FounderFactory, StartupFactory, GameFactory) {
+function DashCtrl (FounderFactory, StartupFactory, GameFactory, $rootScope) {
 	var founder = FounderFactory.getNewFounder();
-	console.log(founder);
+	console.info(founder);
 
 	var startup = StartupFactory.getNewStartup({
 		founder: founder
 	});
-	console.log(startup);
+	console.info(startup);
 
 	var game = GameFactory.getNewGame({
-		startup: startup
+		startup: startup,
+		onTurnComplete: function (attrs) {
+			console.log(attrs);
+			$rootScope.$apply();
+		}
 	});
 
-	console.log(game);
+	console.info(game);
 	game.start();
+
+	this.game = game._options.startup._attributes;
+	this.startup = startup._attributes;
+
+	console.log(this);
 }
 
 angular.module('disruption.controllers', [])

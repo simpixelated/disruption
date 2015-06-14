@@ -11,8 +11,10 @@ function Game (options) {
 	_.extend(game, {
 		update: function () {
 			console.log('updating...');
-			console.log(this._options.startup._attributes);
 			this._options.startup.simulateOnce();
+			if (typeof this._options.onTurnComplete === 'function') {
+				this._options.onTurnComplete(this._options.startup._attributes);
+			}
 		},
 		run: function () {
 			this.update();
