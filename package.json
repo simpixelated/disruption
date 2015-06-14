@@ -1,0 +1,17 @@
+{
+    "name": "ipofest",
+    "version": "0.3.0",
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/simpixelated/ipofest.git"
+    },
+    "devDependencies": {
+        "grunt": "~0.4.1",
+        "grunt-contrib-jshint": "~0.6.3",
+        "grunt-contrib-uglify": "~0.2.2",
+        "grunt-contrib-requirejs": "~0.4.1",
+        "express": "3.5.0",
+        "requirejs": "^2.1.11",
+        "grunt-nodemon": "^0.2.0"
+    }
+}

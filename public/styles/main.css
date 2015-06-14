@@ -1,0 +1,52 @@
+.events {
+	height: 180px;
+	overflow: hidden;
+	position: relative;
+  	margin-top: 20px;
+}
+.events:after {
+	position: absolute;
+	bottom: 0;  
+	height: 100%;
+	width: 100%;
+	content: "";
+	background: linear-gradient(to top,
+		rgba(255,255,255, 1) 20%, 
+		rgba(255,255,255, 0) 90%
+	);
+	pointer-events: none; /* so the text is still selectable */
+}
+.events p {
+	margin-bottom: 5px;
+}
+
+.progress {
+ 	position: relative;
+}
+.progress-bar-labels {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	background: transparent;
+}
+.progress-bar-labels .progress-bar-label {
+	float: left;
+	text-align: center;
+	color: rgba(0, 0, 0, 0.5);
+}
+.progress-bar-label.current {
+	color: #fff;
+}
+.progress-bar-label.complete {
+	color: #fff;
+	background: rgba(0, 0, 0, 0.3);
+}
+
+.dash .actions button {
+	display: block;
+	width: 100%;
+	padding-left: 0;
+	padding-right: 0;
+	margin-bottom: 5px;
+}
