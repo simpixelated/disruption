@@ -1,6 +1,8 @@
 angular.module('disruption', [
 	'ionic',
+	'disruption.models.game',
 	'disruption.models.founder',
+	'disruption.models.startup',
 	'disruption.controllers',
 	'disruption.services'
 	])

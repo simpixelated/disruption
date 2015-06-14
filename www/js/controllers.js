@@ -1,8 +1,20 @@
 (function () {
 
-function DashCtrl (FounderFactory) {
+function DashCtrl (FounderFactory, StartupFactory, GameFactory) {
 	var founder = FounderFactory.getNewFounder();
 	console.log(founder);
+
+	var startup = StartupFactory.getNewStartup({
+		founder: founder
+	});
+	console.log(startup);
+
+	var game = GameFactory.getNewGame({
+		startup: startup
+	});
+
+	console.log(game);
+	game.start();
 }
 
 angular.module('disruption.controllers', [])
