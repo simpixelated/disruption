@@ -57,10 +57,15 @@ function Startup (options) {
 	_.extend(startup, {
 		history: [],
 		simulateOnce: function () {
-			this.simulateUsers();
-			this.simulateCapital();
-			this.simulateDay();
-			this.history.push(_.clone(this.attributes));
+			if (this.get('capital') < 0) {
+                return 'bankrupt';
+            } else {
+            	this.simulateUsers();
+				this.simulateCapital();
+				this.simulateDay();
+				this.history.push(_.clone(this._attributes));
+				return this._attributes;
+            }
 		},
 		simulate: function (delay) {
 			var self = this,

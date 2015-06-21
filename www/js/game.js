@@ -5,13 +5,17 @@ function Game (options) {
 	var game = {};
 
 	game._options = _.defaults({
-		intervalLength: 1000*10
+		intervalLength: 500 * 1
 	}, options);
 
 	_.extend(game, {
 		update: function () {
 			console.log('updating...');
-			this._options.startup.simulateOnce();
+			var response = this._options.startup.simulateOnce();
+			if (response === 'bankrupt') {
+				this.stop();
+				console.log(response);
+			}
 			if (typeof this._options.onTurnComplete === 'function') {
 				this._options.onTurnComplete(this._options.startup._attributes);
 			}
