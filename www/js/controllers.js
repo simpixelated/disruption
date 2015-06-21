@@ -1,6 +1,6 @@
 (function () {
 
-function DashCtrl (FounderFactory, StartupFactory, GameFactory, $rootScope) {
+function DashCtrl (FounderFactory, StartupFactory, GameFactory, $rootScope, $scope) {
 	var founder = FounderFactory.getNewFounder();
 	console.info(founder);
 
@@ -24,6 +24,49 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, $rootScope) {
 	this.startup = startup._attributes;
 
 	console.log(this);
+
+	// CHART
+	// TODO: move to directive / switch to angularjs-charts/ChartJS
+	var chart = angular.element('#statsChart').highcharts({
+		chart: {
+			type: 'spline'
+		},
+		plotOptions: {
+			series: {
+				marker: {
+					enabled: false
+				}
+			}
+		},
+		series: [{
+			name: 'Capital',
+			data: [startup.get('capital')]
+		}, {
+			name: 'Users',
+			data: [startup.get('users')]
+		}],
+		xAxis: {
+			title: {
+				text: 'Day'
+			}
+		},
+		yAxis: {
+			title: {
+				text: '$'
+			}
+		}
+	});
+
+	$scope.$watch(function () {
+		return startup.get('capital');
+	}, function (newValue) {
+		chart.highcharts().series[0].addPoint(newValue);
+	});
+	$scope.$watch(function () {
+		return startup.get('users');
+	}, function (newValue) {
+		chart.highcharts().series[1].addPoint(newValue);
+	});
 }
 
 angular.module('disruption.controllers', [])
