@@ -17,8 +17,8 @@ function Startup (options) {
 		
 		// TODO: incorporate these stats into simulation
 		// development: 1,
-		// bugginess: 0,
-		// morale: 0,
+		bugginess: 0,
+		morale: 0,
 		// virality: 0,
 
 		// TODO: move market into "Market" model

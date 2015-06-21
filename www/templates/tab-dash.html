@@ -17,5 +17,12 @@
 				</ul>
 			</div>
 		</div>
+
+		<div>
+			<h2>Actions</h2>
+			<button class="button button-block button-positive" ng-repeat="action in dash.actions" ng-click="dash.takeAction(action)">
+				{{ ::action.name }}
+			</button>
+		</div>
 	</ion-content>
 </ion-view>

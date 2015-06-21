@@ -1,6 +1,6 @@
 (function () {
 
-function DashCtrl (FounderFactory, StartupFactory, GameFactory, $rootScope, $scope) {
+function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $rootScope, $scope, $ionicPopup) {
 	var founder = FounderFactory.getNewFounder();
 	console.info(founder);
 
@@ -67,6 +67,20 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, $rootScope, $sco
 	}, function (newValue) {
 		chart.highcharts().series[1].addPoint(newValue);
 	});
+
+	this.actions = ActionFactory.getAllActions();
+	this.takeAction = function (action) {
+		var response = action.run(startup._attributes);
+		game.stop();
+		var alert = $ionicPopup.alert({
+			title: action.name + ' ' + response.message.type,
+			template: response.message.text
+		});
+		alert.then(function () {
+			game.start();
+		});
+		startup.set(response.attributes);
+	};
 }
 
 angular.module('disruption.controllers', [])

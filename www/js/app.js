@@ -3,6 +3,7 @@ angular.module('disruption', [
 	'disruption.models.game',
 	'disruption.models.founder',
 	'disruption.models.startup',
+	'disruption.models.actions',
 	'disruption.controllers',
 	'disruption.services'
 	])

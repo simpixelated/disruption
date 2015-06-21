@@ -15,7 +15,7 @@ function Game (options) {
 		update: function () {
 			console.log('updating...');
 			var response = this._options.startup.simulateOnce();
-			this.simulateDay();			
+			this.simulateDay();
 			if (response === 'bankrupt') {
 				this.stop();
 				console.log(response);
