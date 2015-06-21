@@ -1,34 +1,25 @@
 (function () {
 
 function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $rootScope, $scope, $ionicPopup) {
-	var founder = FounderFactory.getNewFounder();
-	console.info(founder);
-
-	var startup = StartupFactory.getNewStartup({
-		founder: founder
-	});
-	console.info(startup);
-
-	var game = GameFactory.getNewGame({
-		startup: startup,
-		onTurnComplete: function (attrs, msg) {
-			console.log(attrs);
-			$rootScope.$apply();
-			if (msg) {
-				$ionicPopup.alert({
-					template: msg
-				});
+	var founder = FounderFactory.getNewFounder(),
+		startup = StartupFactory.getNewStartup({
+			founder: founder
+		}),
+		game = GameFactory.getNewGame({
+			startup: startup,
+			onTurnComplete: function (attrs, msg) {
+				console.log(attrs);
+				$rootScope.$apply();
+				if (msg) {
+					$ionicPopup.alert({
+						template: msg
+					});
+				}
 			}
-		}
-	});
-
-	console.info(game);
-	game.start();
+		});
 
 	this.game = game._options;
 	this.startup = startup._attributes;
-
-	console.log(this);
 
 	// CHART
 	// TODO: move to directive / switch to angularjs-charts/ChartJS
@@ -77,15 +68,21 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 	this.takeAction = function (action) {
 		var response = action.run(startup._attributes);
 		game.stop();
-		var alert = $ionicPopup.alert({
+		$ionicPopup.alert({
 			title: action.name + ' ' + response.message.type,
 			template: response.message.text
-		});
-		alert.then(function () {
+		}).then(function () {
+			startup.set(response.attributes);
 			game.start();
 		});
-		startup.set(response.attributes);
 	};
+
+	$ionicPopup.alert({
+		title: 'Disruption',
+		template: 'As a serial entreprenuer, it\`s your goal to create a startup that disrupts the [x] industry like Uber did for taxis. You have $[x] dollars to start. Use them to hire talent, write code, and pitch investors. Keep going until you run out of cash!'
+	}).then(function () {
+		game.start();
+	});
 }
 
 angular.module('disruption.controllers', [])
