@@ -20,7 +20,7 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, $rootScope, $sco
 	console.info(game);
 	game.start();
 
-	this.game = game._options.startup._attributes;
+	this.game = game._options;
 	this.startup = startup._attributes;
 
 	console.log(this);

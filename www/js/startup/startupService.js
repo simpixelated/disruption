@@ -21,10 +21,6 @@ function Startup (options) {
 		// morale: 0,
 		// virality: 0,
 
-		// TODO: move time into "Game" model
-		year: 1,
-		quarter: 1,
-		day: 1,
 		// TODO: move market into "Market" model
 		// from: http://www.internetworldstats.com/stats.htm
 		marketSizeGlobal: 2802478934,
@@ -62,37 +58,9 @@ function Startup (options) {
             } else {
             	this.simulateUsers();
 				this.simulateCapital();
-				this.simulateDay();
 				this.history.push(_.clone(this._attributes));
 				return this._attributes;
             }
-		},
-		simulate: function (delay) {
-			var self = this,
-				timeout;
-
-			timeout = setInterval(function () {
-				self.simulateOnce();
-				if (self.get('capital') < 0) {
-					clearInterval(timeout);
-					console.log(self.attributes);
-				}
-			}, delay || 100);
-		},
-		getQuarterFromDay: function (day) {
-			return Math.ceil(day/(365/4));
-		},
-		getYearFromDay: function (day) {
-			return Math.ceil(day/365);
-		},
-		simulateDay: function () {
-			var day = this.get('day') + 1;
-
-			this.set({
-				day: day,
-				quarter: this.getQuarterFromDay(day),
-				year: this.getYearFromDay(day)
-			});
 		},
 		simulateUsers: function () {
 			var curUsers = this.get('users'),
@@ -109,6 +77,12 @@ function Startup (options) {
 			this.set('users', users);
 			this.set(competitors);
 			this.set('marketShare', this.getMarketShare(users, competitors.competitorUsers));
+		},
+		simulateCapital: function () {
+			var costs = this.getOperatingCosts(),
+				revenue = this.getRevenue();
+
+			this.set('capital', this.get('capital') - costs + revenue);
 		},
 		getMarketShare: function(users, competitorUsers) {
 			return users/(users+competitorUsers);
@@ -129,12 +103,6 @@ function Startup (options) {
 				competitors: competitors,
 				competitorUsers: competitorUsers
 			};
-		},
-		simulateCapital: function () {
-			var costs = this.getOperatingCosts(),
-				revenue = this.getRevenue();
-
-			this.set('capital', this.get('capital') - costs + revenue);
 		},
 		getOperatingCosts: function () {
 			var costs = [0];
