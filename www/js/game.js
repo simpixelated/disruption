@@ -5,7 +5,7 @@ function Game (options) {
 	var game = {};
 
 	game._options = _.defaults({
-		intervalLength: 500 * 1,
+		intervalLength: 1000 * 1,
 		year: 1,
 		quarter: 1,
 		day: 1
@@ -18,9 +18,9 @@ function Game (options) {
 			this.simulateDay();
 			response = this._options.startup.simulateOnce();
 
-			if (response === 'bankrupt') {
+			if (response.capital <= 0) {
 				this.stop();
-				msg = response;
+				msg = 'Oh no, your startup went bankrupt! Write your postmortem blog post, then start again. Every failure is a chance to iterate.';
 			}
 
 			if (typeof this._options.onTurnComplete === 'function') {

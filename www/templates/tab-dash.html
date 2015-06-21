@@ -10,9 +10,9 @@
 				<ul>
 					<li>Day: {{ dash.game.day }} Y{{ dash.game.year }}Q{{ dash.game.quarter }}</li>
 					<li>Capital: {{ dash.startup.capital | currency: "$" : 0 }}</li>
-					<li>Users: {{ dash.startup.users }}</li>
+					<li>Users: {{ dash.startup.users | number: 0 }}</li>
 					<li>Competitors: {{ dash.startup.competitors }}</li>
-					<li>Market Share: {{ dash.startup.marketShare }}%</li>
+					<li>Market Share: {{ dash.startup.marketShare | number: 2 }}%</li>
 					<li>Cost per User: {{ dash.startup.costPerUser | currency }}</li>
 				</ul>
 			</div>
@@ -20,7 +20,7 @@
 
 		<div>
 			<h2>Actions</h2>
-			<button class="button button-block button-positive" ng-repeat="action in dash.actions" ng-click="dash.takeAction(action)">
+			<button class="button button-block button-positive" ng-repeat="action in dash.actions" ng-click="dash.takeAction(action)" ng-if="dash.canShowAction(action)">
 				{{ ::action.name }}
 			</button>
 		</div>

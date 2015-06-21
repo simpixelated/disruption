@@ -81,4 +81,15 @@ angular.module('disruption', [
 	// if none of the above states are matched, use this as the fallback
 	$urlRouterProvider.otherwise('/tab/dash');
 
-});
+})
+
+.constant('_actionTypes', {
+	funding: 'Funding'
+})
+
+.constant('_startupStages', [
+	'Initial',
+	'Discovery',
+	'Validation',
+	'Scaling'
+]);

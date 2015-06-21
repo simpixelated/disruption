@@ -1,6 +1,6 @@
 (function () {
 
-function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $rootScope, $scope, $ionicPopup) {
+function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $rootScope, $scope, $ionicPopup, $ionicModal, _startupStages, _actionTypes) {
 	var founder = FounderFactory.getNewFounder(),
 		startup = StartupFactory.getNewStartup({
 			founder: founder
@@ -76,12 +76,32 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 			game.start();
 		});
 	};
+	this.canShowAction = function (action) {
+		return _.contains(action.stage, startup.get('stage'));
+	};
 
-	$ionicPopup.alert({
-		title: 'Disruption',
-		template: 'As a serial entreprenuer, it\`s your goal to create a startup that disrupts the [x] industry like Uber did for taxis. You have $[x] dollars to start. Use them to hire talent, write code, and pitch investors. Keep going until you run out of cash!'
-	}).then(function () {
-		game.start();
+	var modalScope = $rootScope.$new();
+	$ionicModal.fromTemplateUrl('templates/initialFunding.html', {
+		scope: _.extend(modalScope, {
+			actions: _.filter(this.actions, { type: _actionTypes.funding }),
+			takeAction: function (action) {
+				var response = action.run(startup._attributes);
+				startup.set(response.attributes);
+				modalScope.fundingMessage = response.message;
+			}
+		})
+	}).then(function (modal) {
+		modal.show();
+		modalScope.modal = modal;
+		modalScope.$on('$destroy', function () {
+			modal.remove();
+		});
+		modalScope.$on('modal.hidden', function () {
+			startup.set({
+				stage: _startupStages[1]
+			});
+			game.start();
+		});
 	});
 }
 
