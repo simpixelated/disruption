@@ -76,9 +76,6 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 			game.start();
 		});
 	};
-	this.canShowAction = function (action) {
-		return _.contains(action.stage, startup.get('stage'));
-	};
 
 	var modalScope = $rootScope.$new();
 	$ionicModal.fromTemplateUrl('templates/initialFunding.html', {

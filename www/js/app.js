@@ -84,7 +84,8 @@ angular.module('disruption', [
 })
 
 .constant('_actionTypes', {
-	funding: 'Funding'
+	funding: 'Funding',
+	hr: 'Human Resources'
 })
 
 .constant('_startupStages', [
