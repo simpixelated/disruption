@@ -11,9 +11,14 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 
 	var game = GameFactory.getNewGame({
 		startup: startup,
-		onTurnComplete: function (attrs) {
+		onTurnComplete: function (attrs, msg) {
 			console.log(attrs);
 			$rootScope.$apply();
+			if (msg) {
+				$ionicPopup.alert({
+					template: msg
+				});
+			}
 		}
 	});
 

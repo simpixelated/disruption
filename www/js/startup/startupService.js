@@ -54,7 +54,7 @@ function Startup (options) {
 		history: [],
 		simulateOnce: function () {
 			if (this.get('capital') < 0) {
-                return 'bankrupt';
+                return 'Oh no, your startup went bankrupt! Write your postmortem blog post, then start again. Every failure is a chance to iterate.';
             } else {
             	this.simulateUsers();
 				this.simulateCapital();

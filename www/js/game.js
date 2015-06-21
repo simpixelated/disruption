@@ -13,15 +13,18 @@ function Game (options) {
 
 	_.extend(game, {
 		update: function () {
-			console.log('updating...');
-			var response = this._options.startup.simulateOnce();
+			var response, msg;
+
 			this.simulateDay();
+			response = this._options.startup.simulateOnce();
+
 			if (response === 'bankrupt') {
 				this.stop();
-				console.log(response);
+				msg = response;
 			}
+
 			if (typeof this._options.onTurnComplete === 'function') {
-				this._options.onTurnComplete(this._options.startup._attributes);
+				this._options.onTurnComplete(this._options.startup._attributes, msg);
 			}
 		},
 		run: function () {
@@ -31,8 +34,6 @@ function Game (options) {
 			this._options.intervalId = setInterval(_.bind(this.run, this), game._options.intervalLength);
 		},
 		stop: function () {
-			// To stop the game, use the following:
-			console.log('stopping...');
 			clearInterval(this._options.intervalId);
 		},
 		getQuarterFromDay: function (day) {
