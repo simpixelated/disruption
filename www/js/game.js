@@ -8,7 +8,8 @@ function Game (options) {
 		intervalLength: 1000 * 1,
 		year: 1,
 		quarter: 1,
-		day: 1
+		day: 1,
+		stopped: true
 	}, options);
 
 	_.extend(game, {
@@ -32,9 +33,11 @@ function Game (options) {
 		},
 		start: function () {
 			this._options.intervalId = setInterval(_.bind(this.run, this), game._options.intervalLength);
+			this._options.stopped = false;
 		},
 		stop: function () {
 			clearInterval(this._options.intervalId);
+			this._options.stopped = true;
 		},
 		getQuarterFromDay: function (day) {
 			return Math.ceil(day/(365/4));

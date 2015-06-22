@@ -21,7 +21,7 @@
 			</div>
 		</div>
 
-		<div>
+		<div ng-if="!dash.game.stopped">
 			<h2>Actions</h2>
 			<action-button ng-repeat="action in dash.actions" startup="dash.game.startup" action="action" on-action-complete="dash.onActionComplete(response)">{{action.name}}</action-button>
 		</div>
