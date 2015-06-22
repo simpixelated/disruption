@@ -22,8 +22,8 @@ function ActionFactory ($filter, _actionTypes, _startupStages) {
 
 			message.type = 'success';
 			message.text = [
-				'Your Kickstarter campaign brought in $',
-				capital,
+				'Your Kickstarter campaign brought in ',
+				$filter('currency')(capital, '$', 0),
 				' in seed funding, plus ',
 				users,
 				' new users!']
@@ -57,8 +57,8 @@ function ActionFactory ($filter, _actionTypes, _startupStages) {
 
 			message.type = 'success';
 			message.text = [
-				'Someone actually likes your idea enough to give you $',
-				capital,
+				'Someone actually likes your idea enough to give you ',
+				$filter('currency')(capital, '$', 0),
 				' in seed funding in exchange for ',
 				equity,
 				'% equity.']
@@ -94,8 +94,8 @@ function ActionFactory ($filter, _actionTypes, _startupStages) {
 
 			message.type = 'success';
 			message.text = [
-				'You passed the incubator and have been given $',
-				capital,
+				'You passed the incubator and have been given ',
+				$filter('currency')(capital, '$', 0),
 				' in seed funding in exchange for ',
 				equity,
 				'% equity.']
@@ -154,9 +154,10 @@ function ActionFactory ($filter, _actionTypes, _startupStages) {
 
 			message.type = 'success';
 			message.text = [
-				'You have hired another developer for $',
-				startupAttr.averageSalary,
-				' per year.'
+				'<p>"One machine can do the work of fifty ordinary men. No machine can do the work of one extraordinary man." - Elbert Hubbard</p>',
+				'<p>You have hired another developer for ',
+				$filter('currency')(startupAttr.averageSalary, '$', 0),
+				' per year.</p>'
 				]
 				.join('');
 
