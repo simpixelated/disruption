@@ -1,5 +1,6 @@
 angular.module('disruption', [
 	'ionic',
+	'ngNumeraljs',
 	'disruption.models.game',
 	'disruption.models.founder',
 	'disruption.models.startup',
