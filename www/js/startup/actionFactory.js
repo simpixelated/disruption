@@ -127,7 +127,11 @@ function ActionFactory ($filter, _actionTypes, _startupStages) {
 				bugginess = 1;
 
 			message.type = 'success';
-			message.text = 'No one will use it, but at least your developers can now add REST API to their resumes.';
+			message.text = [
+				'<p>Technological progress has merely provided us with more efficient means for going backwards." - Aldous Huxley</p>',
+				'<p><strong>REST API complete!</strong> No one will use it for many more months, but at least your developers can add it to their resumes.</p>'
+				]
+				.join('');
 
 			return {
 				message: message,

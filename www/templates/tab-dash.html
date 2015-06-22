@@ -16,6 +16,7 @@
 					<li>Competitors: {{ dash.startupAttr.competitors }}</li>
 					<li>Market Share: {{ dash.startupAttr.marketShare | number: 2 }}%</li>
 					<li>Cost per User: {{ dash.startupAttr.costPerUser | currency }}</li>
+					<li>Valuation: {{ dash.game.startup.getValuation() | currency: "$": 0 }}</li>
 				</ul>
 			</div>
 		</div>

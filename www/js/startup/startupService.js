@@ -18,6 +18,7 @@ function StartupFactory (_startupStages) {
 			users: 1,
 			capital: 0,
 			equity: 100,
+			lifetimeUserValue: 0.10,
 
 			// TODO: incorporate these stats into simulation
 			// development: 1,
@@ -119,6 +120,17 @@ function StartupFactory (_startupStages) {
 			},
 			getRevenue: function () {
 				return this.get('users') * this.get('revenuePerUser');
+			},
+			getValuation: function () {
+				// LTV = users lifetime value (e.g. $2)
+				// ROI timeline = 5-10 years
+				// users * monthlyGrowth * (12 * 5) * LTV
+				var users = this.get('users'),
+					LTV = this.get('lifetimeUserValue'),
+					// TODO: replace with dynamic user growth calculation
+					monthlyUserGrowth = 0.15;
+
+				return Math.pow(1 + monthlyUserGrowth, (12 * 5)) * (users * LTV);
 			}
 		});
 
