@@ -1,0 +1,7 @@
+<button
+class="button button-block button-calm icon-left"
+ng-click="takeAction(action)"
+ng-class="getActionClass(action)"
+ng-if="action.isVisible(startup._attributes)">
+	{{ ::action.name }}
+</button>

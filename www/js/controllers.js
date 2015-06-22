@@ -19,7 +19,7 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 		});
 
 	this.game = game._options;
-	this.startup = startup._attributes;
+	this.startupAttr = startup._attributes;
 
 	// CHART
 	// TODO: move to directive / switch to angularjs-charts/ChartJS
@@ -65,11 +65,10 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 	});
 
 	this.actions = ActionFactory.getAllActions();
-	this.takeAction = function (action) {
-		var response = action.run(startup._attributes);
+	this.onActionComplete = function (response) {
 		game.stop();
 		$ionicPopup.alert({
-			title: action.name + ' ' + response.message.type,
+			title: response.action.name + ' ' + response.message.type,
 			template: response.message.text
 		}).then(function () {
 			startup.set(response.attributes);
@@ -81,9 +80,8 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 	$ionicModal.fromTemplateUrl('templates/initialFunding.html', {
 		scope: _.extend(modalScope, {
 			actions: _.filter(this.actions, { type: _actionTypes.funding }),
-			takeAction: function (action) {
-				var response = action.run(startup._attributes);
-				startup.set(response.attributes);
+			startup: startup,
+			onActionComplete: function (response) {
 				modalScope.fundingMessage = response.message;
 			}
 		})
@@ -100,6 +98,40 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 			game.start();
 		});
 	});
+}
+
+// TODO move to directives file (or for modular: disruption.actions)
+function actionButton (_actionTypes) {
+
+	function link ($scope) {
+
+		$scope.takeAction = function (action) {
+			var response = action.run($scope.startup._attributes);
+			$scope.startup.set(response.attributes);
+			$scope.onActionComplete({ response: _.extend(response, { action: action }) });
+		};
+
+		$scope.getActionClass = function (action) {
+			return {
+				'button-balanced': action.type === _actionTypes.funding,
+				'button-calm': action.type !== _actionTypes.funding,
+				'ion-person-add': action.type === _actionTypes.hr,
+				'ion-merge': action.type === _actionTypes.dev,
+				'ion-social-usd': action.type === _actionTypes.funding
+			};
+		};
+	}
+
+	return {
+		restrict: 'E',
+		link: link,
+		templateUrl: 'templates/actionButton.html',
+		scope: {
+			startup: '=',
+			action: '=',
+			onActionComplete: '&'
+		}
+	};
 }
 
 angular.module('disruption.controllers', [])
@@ -125,6 +157,7 @@ angular.module('disruption.controllers', [])
 		$scope.settings = {
 			enableFriends: true
 		};
-	});
+	})
+	.directive('actionButton', actionButton);
 
 })();

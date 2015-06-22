@@ -7,9 +7,7 @@
 
 		<div ng-if="!fundingMessage">
 			<p>Choose your funding:</p>
-			<button class="button button-block button-positive" ng-repeat="action in ::actions" ng-click="takeAction(action)">
-				{{ ::action.name }}
-			</button>
+			<action-button ng-repeat="action in ::actions" startup="startup" action="action" on-action-complete="onActionComplete(response)"></action-button>
 		</div>
 
 		<div ng-if="fundingMessage">
