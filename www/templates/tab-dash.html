@@ -10,13 +10,14 @@
 				<ul>
 					<li>Day: {{ dash.game.day }} Y{{ dash.game.year }}Q{{ dash.game.quarter }}</li>
 					<li>Capital: {{ dash.startupAttr.capital | currency: "$" : 0 }}</li>
-					<li>Costs (daily): {{ dash.game.startup.getOperatingCosts() | currency: "$" : 0 }}</li>
+					<li>Operating Costs (daily): {{ dash.startupAttr.operatingCosts | currency: "$" : 0 }}</li>
+					<li>Revenue (daily): {{ dash.startupAttr.revenue | currency: "$": 0 }}</li>
 					<li>Users: {{ dash.startupAttr.users | number: 0 }}</li>
 					<li>Employees: {{ dash.startupAttr.employees }}</li>
 					<li>Competitors: {{ dash.startupAttr.competitors }}</li>
 					<li>Market Share: {{ dash.startupAttr.marketShare | number: 2 }}%</li>
 					<li>Cost per User: {{ dash.startupAttr.costPerUser | currency }}</li>
-					<li>Valuation: {{ dash.game.startup.getValuation() | numeraljs: "($ 0a)" }}</li>
+					<li>Valuation: {{ dash.startupAttr.valuation | numeraljs: "($0a)" }}</li>
 				</ul>
 			</div>
 		</div>

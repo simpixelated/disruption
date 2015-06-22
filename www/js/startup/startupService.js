@@ -13,6 +13,7 @@ function StartupFactory (_startupStages) {
 			employees: 1,
 			averageSalary: 70000,
 			rent: 0,
+			revenue: 0,
 			revenuePerUser: 0,
 			costPerUser: 0.01,
 			users: 1,
@@ -60,6 +61,7 @@ function StartupFactory (_startupStages) {
 			simulateOnce: function () {
 				this.simulateUsers();
 				this.simulateCapital();
+				this.simulateValuation();
 				this.history.push(_.clone(this._attributes));
 				return this._attributes;
 			},
@@ -84,6 +86,11 @@ function StartupFactory (_startupStages) {
 					revenue = this.getRevenue();
 
 				this.set('capital', this.get('capital') - costs + revenue);
+				this.set('revenue', revenue);
+				this.set('operatingCosts', costs);
+			},
+			simulateValuation: function () {
+				this.set('valuation', this.getValuation());
 			},
 			getMarketShare: function(users, competitorUsers) {
 				return users/(users+competitorUsers);
