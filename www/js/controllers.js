@@ -54,14 +54,10 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 	});
 
 	$scope.$watch(function () {
-		return startup.get('capital');
-	}, function (newValue) {
-		chart.highcharts().series[0].addPoint(newValue);
-	});
-	$scope.$watch(function () {
-		return startup.get('users');
-	}, function (newValue) {
-		chart.highcharts().series[1].addPoint(newValue);
+		return game._options.day;
+	}, function () {
+		chart.highcharts().series[0].addPoint(startup._attributes.capital);
+		chart.highcharts().series[1].addPoint(startup._attributes.users);
 	});
 
 	this.actions = ActionFactory.getAllActions();
