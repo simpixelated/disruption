@@ -1,6 +1,7 @@
 angular.module('disruption', [
 	'ionic',
 	'ngNumeraljs',
+	'angular-progress-button-styles',
 	'disruption.models.game',
 	'disruption.models.founder',
 	'disruption.models.startup',

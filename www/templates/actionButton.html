@@ -1,7 +1,6 @@
 <button
 class="button button-block button-calm icon-left"
-ng-click="takeAction(action)"
 ng-class="getActionClass(action)"
-ng-if="action.isVisible(startup._attributes)">
-	{{ ::action.name }}
-</button>
+ng-if="action.isVisible(startup._attributes)"
+ng-disabled="isDisabled"
+progress-button="takeAction(action)">{{ ::action.name }}</button>

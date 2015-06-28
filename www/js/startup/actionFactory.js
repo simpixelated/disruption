@@ -1,7 +1,16 @@
 (function (angular, _) {
 'use strict';
 
-function ActionFactory ($filter, _actionTypes, _startupStages) {
+function ActionFactory ($filter, $timeout, _actionTypes, _startupStages) {
+
+	function Action (action) {
+		_.extend(this, action);
+		this.run = function (startupAttr) {
+			return $timeout(function () {
+				return action.run(startupAttr);
+			}, action.duration);
+		};
+	}
 
 	var actions = [];
 
@@ -116,6 +125,7 @@ function ActionFactory ($filter, _actionTypes, _startupStages) {
 		name: 'Write API',
 		type: _actionTypes.dev,
 		stage: _startupStages,
+		duration: 5000,
 		isVisible: function (startupAttr) {
 			return _.all([
 				_.contains(this.stage, startupAttr.stage)
@@ -147,6 +157,7 @@ function ActionFactory ($filter, _actionTypes, _startupStages) {
 		name: 'Hire Developer',
 		type: _actionTypes.hr,
 		stage: _startupStages,
+		duration: 5000,
 		isVisible: function (startupAttr) {
 			return _.all([
 				_.contains(this.stage, startupAttr.stage)
@@ -176,7 +187,9 @@ function ActionFactory ($filter, _actionTypes, _startupStages) {
 
 	return {
 		getAllActions: function () {
-			return actions;
+			return _.map(actions, function (action) {
+				return new Action(action);
+			});
 		}
 	};
 }

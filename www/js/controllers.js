@@ -61,6 +61,7 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 	});
 
 	this.actions = ActionFactory.getAllActions();
+	console.log(this.actions);
 	this.onActionComplete = function (response) {
 		game.stop();
 		$ionicPopup.alert({
@@ -107,9 +108,12 @@ function actionButton (_actionTypes) {
 	function link ($scope) {
 
 		$scope.takeAction = function (action) {
-			var response = action.run($scope.startup._attributes);
-			$scope.startup.set(response.attributes);
-			$scope.onActionComplete({ response: _.extend(response, { action: action }) });
+			$scope.isDisabled = true;
+			return action.run($scope.startup._attributes).then(function (response) {
+				$scope.startup.set(response.attributes);
+				$scope.onActionComplete({ response: _.extend(response, { action: action }) });
+				$scope.isDisabled = false;
+			});
 		};
 
 		$scope.getActionClass = function (action) {
