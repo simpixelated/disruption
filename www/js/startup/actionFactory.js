@@ -3,16 +3,57 @@
 
 function ActionFactory ($filter, $timeout, _actionTypes, _startupStages) {
 
-	function Action (action) {
-		_.extend(this, action);
-		this.run = function (startupAttr) {
+	function Action (options) {
+
+		var action = _.extend({}, options);
+
+		action.run = function (startupAttr) {
 			return $timeout(function () {
-				return action.run(startupAttr);
+				// allows this.whatever to be overridden inside the action definition
+				return _.bind(options.run, action)(startupAttr);
 			}, action.duration);
+		};
+
+		return action;
+	}
+
+	function getMessage (text, type) {
+		return {
+			type: type || 'success',
+			text: text
 		};
 	}
 
 	var actions = [];
+
+	actions.push({
+		name: 'Develop Feature: Photo Upload',
+		type: _actionTypes.dev,
+		stage: _startupStages,
+		duration: 5000,
+		isVisible: function (startupAttr) {
+			return true;
+		},
+		run: function (startupAttr) {
+			var users = _.random(1, _.max([10, startupAttr.users * 0.006])),
+				message = [
+					'You\'ve added photo upload to your app!',
+					' Users can now upload a daily selfie.',
+					' Surprisingly, this attracted ',
+					users,
+					' new users.'
+					].join('');
+
+			this.isVisible = function () { return false; };
+
+			return {
+				message: getMessage(message),
+				attributes: {
+					users: startupAttr.users + users
+				}
+			};
+		}
+	});
 
 	actions.push({
 		name: 'Kickstarter Campaign',
@@ -25,12 +66,11 @@ function ActionFactory ($filter, $timeout, _actionTypes, _startupStages) {
 		},
 		run: function (startupAttr) {
 
-			var message = {},
-				capital = _.random(1, 5) * 10000,
-				users = _.random(0, 10000);
+			var capital = _.random(1, 5) * 10000,
+				users = _.random(0, 10000),
+				message;
 
-			message.type = 'success';
-			message.text = [
+			message = [
 				'Your Kickstarter campaign brought in ',
 				$filter('currency')(capital, '$', 0),
 				' in seed funding, plus ',
@@ -39,7 +79,7 @@ function ActionFactory ($filter, $timeout, _actionTypes, _startupStages) {
 				.join('');
 
 			return {
-				message: message,
+				message: getMessage(message),
 				attributes: {
 					capital: startupAttr.capital + capital,
 					users: startupAttr.users + users

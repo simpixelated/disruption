@@ -61,7 +61,6 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 	});
 
 	this.actions = ActionFactory.getAllActions();
-	console.log(this.actions);
 	this.onActionComplete = function (response) {
 		game.stop();
 		$ionicPopup.alert({
