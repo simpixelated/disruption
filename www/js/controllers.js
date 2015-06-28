@@ -72,28 +72,33 @@ function DashCtrl (FounderFactory, StartupFactory, GameFactory, ActionFactory, $
 		});
 	};
 
-	var modalScope = $rootScope.$new();
-	$ionicModal.fromTemplateUrl('templates/initialFunding.html', {
-		scope: _.extend(modalScope, {
-			actions: _.filter(this.actions, { type: _actionTypes.funding }),
-			startup: startup,
-			onActionComplete: function (response) {
-				modalScope.fundingMessage = response.message;
-			}
-		})
-	}).then(function (modal) {
-		modal.show();
-		modalScope.modal = modal;
-		modalScope.$on('$destroy', function () {
-			modal.remove();
-		});
-		modalScope.$on('modal.hidden', function () {
-			startup.set({
-				stage: _startupStages[1]
-			});
-			game.start();
-		});
+	startup.set({
+		stage: _startupStages[1]
 	});
+	game.start();
+
+	// var modalScope = $rootScope.$new();
+	// $ionicModal.fromTemplateUrl('templates/initialFunding.html', {
+	// 	scope: _.extend(modalScope, {
+	// 		actions: _.filter(this.actions, { type: _actionTypes.funding }),
+	// 		startup: startup,
+	// 		onActionComplete: function (response) {
+	// 			modalScope.fundingMessage = response.message;
+	// 		}
+	// 	})
+	// }).then(function (modal) {
+	// 	modal.show();
+	// 	modalScope.modal = modal;
+	// 	modalScope.$on('$destroy', function () {
+	// 		modal.remove();
+	// 	});
+	// 	modalScope.$on('modal.hidden', function () {
+	// 		startup.set({
+	// 			stage: _startupStages[1]
+	// 		});
+	// 		game.start();
+	// 	});
+	// });
 }
 
 // TODO move to directives file (or for modular: disruption.actions)

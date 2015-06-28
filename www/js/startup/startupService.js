@@ -10,12 +10,12 @@ function StartupFactory (_startupStages) {
 
 		startup._attributes = {
 			stage: _startupStages[0],
-			employees: 1,
+			employees: 0,
 			averageSalary: 70000,
 			rent: 0,
 			revenue: 0,
 			revenuePerUser: 0,
-			costPerUser: 0.01,
+			costPerUser: 0,
 			users: 1,
 			capital: 0,
 			equity: 100,
@@ -67,10 +67,10 @@ function StartupFactory (_startupStages) {
 			},
 			simulateUsers: function () {
 				var curUsers = this.get('users'),
-					newUsers = Math.ceil(curUsers*_.random(0.0,0.2)),
+					newUsers = Math.ceil( curUsers * _.random(-0.006, 0.006) ),
 					competitors = this.getCompetitors(),
 					market = this.get('marketSizeLocal') - competitors.competitorUsers,
-					users = curUsers+newUsers;
+					users = curUsers + newUsers;
 
 				if (users >= market) {
 					users = curUsers - newUsers;
@@ -91,6 +91,13 @@ function StartupFactory (_startupStages) {
 			},
 			simulateValuation: function () {
 				this.set('valuation', this.getValuation());
+			},
+			getUserGrowth: function () {
+				// get last turns users
+				// get this turns users
+				// get diff
+				// calc diff as % of last turns users
+				// return result
 			},
 			getMarketShare: function(users, competitorUsers) {
 				return users/(users+competitorUsers);

@@ -19,7 +19,7 @@ function Game (options) {
 			this.simulateDay();
 			response = this._options.startup.simulateOnce();
 
-			if (response.capital <= 0) {
+			if (response.capital < 0) {
 				this.stop();
 				msg = 'Oh no, your startup went bankrupt! Write your postmortem blog post, then start again. Every failure is a chance to iterate.';
 			}
