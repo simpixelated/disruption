@@ -172,16 +172,17 @@ function ActionFactory ($filter, $timeout, _actionTypes, _startupStages) {
 			]);
 		},
 		run: function (startupAttr) {
-			var message = {},
+			var message,
 				morale = 1,
 				bugginess = 1;
 
-			message.type = 'success';
-			message.text = [
+			message = getMessage([
 				'<p>Technological progress has merely provided us with more efficient means for going backwards." - Aldous Huxley</p>',
 				'<p><strong>REST API complete!</strong> No one will use it for many more months, but at least your developers can add it to their resumes.</p>'
 				]
-				.join('');
+				.join(''));
+
+			this.isVisible = function () { return false; };
 
 			return {
 				message: message,
@@ -233,6 +234,12 @@ function ActionFactory ($filter, $timeout, _actionTypes, _startupStages) {
 		}
 	};
 }
+
+
+var friends = {
+	bob: {}
+	joe: ,
+};
 
 angular.module('disruption.models.actions', [])
 	.factory('ActionFactory', ActionFactory);
