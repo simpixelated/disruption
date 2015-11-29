@@ -237,8 +237,8 @@ function ActionFactory ($filter, $timeout, _actionTypes, _startupStages) {
 
 
 var friends = {
-	bob: {}
-	joe: ,
+	bob: {},
+	joe: {}
 };
 
 angular.module('disruption.models.actions', [])
