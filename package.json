@@ -1,6 +1,6 @@
 {
   "name": "disruption-game",
-  "version": "0.1.0",
+  "version": "0.0.3",
   "description": "Disruption: a game.",
   "main": "index.js",
   "scripts": {
