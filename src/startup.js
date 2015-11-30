@@ -1,14 +1,9 @@
 'use strict';
 
 import Immutable from './utils/Immutable';
+import { FUNDING_ROUNDS } from './funding';
 import _ from 'lodash/index';
 
-const FUNDING_ROUNDS = ['Bootstrap', 'Seed', 'A', 'B', 'C', 'D'];
-
-/*
-example startup:
-*/
-// TODO: move to own file
 let Startup = function (options) {
 
 	let startup = {};
@@ -101,39 +96,4 @@ let Startup = function (options) {
 	return startup;
 };
 
-// TODO: move to separate file
-let Funding = function (options) {
-
-	let funding = {};
-
-	funding.attrs = Immutable.fromJS(_.extend({
-		amount: 0,
-		round: FUNDING_ROUNDS[1]
-	}, options));
-	funding.get = funding.attrs.get;
-	funding.set = funding.attrs.set;
-	return funding;
-};
-
-/*
-example asset:
-TODO: move to own file
-*/
-let Asset = function (options) {
-	let asset = {};
-	
-	asset.attrs = Immutable.fromJS({
-		purchaseCost: 1000,
-		perTurnCost: 30,
-		valuationPerTurn: 30*4
-	});
-	asset.get = asset.attrs.get;
-	asset.set = asset.attrs.set;
-	return asset;
-}
-
-let assets = [
-	// TODO: create assets
-];
-
-export { Startup, Funding, Asset, assets, FUNDING_ROUNDS };
+export default Startup;

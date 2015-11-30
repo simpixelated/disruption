@@ -1,6 +1,8 @@
 'use strict';
 
-import { Startup, Funding, assets, FUNDING_ROUNDS } from './app';
+import Startup from './startup';
+import { Funding, FUNDING_ROUNDS } from './funding';
+import { Asset, assets } from './asset';
 
 describe('startup init', function () {
 
@@ -49,12 +51,11 @@ describe('assets', function () {
 			// other assets changing the total per turn cost
 			// TODO: test with multiple assets on each turn
 			var startup = new Startup();
-			var game = new Game(startup);
 			var expectedFunding;
 
 			startup.purchaseAsset(asset);
 			expectedFunding = startup.get('funding') - asset.get('perTurnCost');
-			game.nextTurn();
+			startup.nextTurn();
 			expect(startup.get('funding')).toEqual(expectedFunding);
 		});
 	});
