@@ -1,43 +1,47 @@
-'use strict';
-
 import Immutable from './utils/Immutable';
 import { FUNDING_ROUNDS } from './funding';
 import _ from 'lodash/index';
 
-let Startup = function (options) {
+class Startup {
 
-	let startup = {};
+	constructor (options) {
 
-	startup.attrs = Immutable.fromJS(_.extend({
-		funding: 0,
-		assets: [],
-		currentTurn: 1
-	}, options));
-	startup.get = startup.attrs.get;
-	startup.set = startup.attrs.set;
+		this.attrs = Immutable.fromJS(_.extend({
+			funding: 0,
+			assets: [],
+			currentTurn: 1
+		}, options));
 
-	startup.setValuation = function (funding) {
+		this.get = this.attrs.get;
+		this.set = this.attrs.set;
+
+		if (!this.get('valuation')) {
+			this.setValuation(this.get('funding'));
+		}
+	}
+
+	setValuation (funding) {
 		this.set('valuation', funding * 4);
-	};
+	}
 
-	startup.purchaseAsset = function (asset) {
+	purchaseAsset (asset) {
 		this.addAsset(asset);
 		this.decreaseFunding(asset.get('purchaseCost'));
-	};
+	}
 
-	startup.addAsset = function (asset) {
+	addAsset (asset) {
 		this.set('assets', this.get('assets').push(asset));
-	};
+	}
 
-	startup.addFunding = function (funding) {
+	addFunding (funding) {
 		this.increaseFunding(funding.get('amount'));
 		if (funding.get('type') !== 'bridge') {
 			this.increaseValuation(funding.get('amount') * 4);
 			this.increaseRound(funding.get('round'));
 		}
-	};
+	}
 
-	startup.increaseRound = function (round) {
+	increaseRound (round) {
 		let fundingRoundIndex = FUNDING_ROUNDS.indexOf(round);
 		let nextRound;
 
@@ -52,48 +56,44 @@ let Startup = function (options) {
 		this.set('round', nextRound);
 	}
 
-	startup.increaseFunding = function (amount) {
+	increaseFunding (amount) {
 		this.set('funding', this.get('funding') + amount);
-	};
+	}
 
-	startup.decreaseFunding = function (amount) {
+	decreaseFunding (amount) {
 		this.set('funding', this.get('funding') - amount);
-	};
+	}
 
-	startup.increaseValuation = function (amount) {
+	increaseValuation (amount) {
 		this.set('valuation', this.get('valuation') + amount);
-	};
+	}
 
-	startup.manageAsset = function (assetId) {
+	manageAsset (assetId) {
 		let asset = this.getAssetById(id);
 		// TODO: emit error if not found
 		if (asset) {
 			this.increaseValuation(asset.get('valuationPerTurn'));
 		}
-	};
+	}
 
-	startup.getAssetById = function (id) {
+	getAssetById (id) {
 		return _.find(this.get('assets'), function (asset) {
 			return asset.get('id') === assetId;
 		});
-	};
+	}
 
-	startup.nextTurn = function () {
+	nextTurn () {
 		this.get('assets').forEach(function (asset) {
-			this.startup.decreaseFunding(asset.get('perTurnCost'));
+			// todo: fix this context
+			this.decreaseFunding(asset.get('perTurnCost'));
 		});
 		this.increaseTurn(1);
 	}
 
-	startup.increaseTurn = function (num) {
+	increaseTurn (num) {
 		this.set('currentTurn', this.get('currentTurn') + num);
 	}
 
-	if (!startup.get('valuation')) {
-		startup.setValuation(startup.get('funding'));
-	}
-
-	return startup;
-};
+}
 
 export default Startup;
