@@ -1,6 +1,6 @@
 import Startup from './startup';
 import { Funding, FUNDING_ROUNDS } from './funding';
-import { assets } from './asset';
+import { Asset, assets } from './asset';
 
 describe('startup init', function () {
 
@@ -42,6 +42,13 @@ describe('startup init', function () {
 });
 
 describe('assets', function () {
+
+	it('new asset has reasonable defaults', function () {
+		var asset = new Asset();
+		expect(typeof asset.get('purchaseCost')).toEqual('number');
+		expect(typeof asset.get('perTurnCost')).toEqual('number');
+		expect(typeof asset.get('valuationPerTurn')).toEqual('number');
+	});
 
 	it('asset purchases will decrease funding each turn', function () {
 		assets.forEach(function (asset) {
