@@ -20,7 +20,7 @@ class Startup {
 		}
 	}
 
-	setValuation (funding) {
+	setValuation (funding=0) {
 		this.set('valuation', funding * 4);
 	}
 
@@ -56,15 +56,15 @@ class Startup {
 		this.set('round', nextRound);
 	}
 
-	increaseFunding (amount) {
+	increaseFunding (amount=0) {
 		this.set('funding', this.get('funding') + amount);
 	}
 
-	decreaseFunding (amount) {
+	decreaseFunding (amount=0) {
 		this.set('funding', this.get('funding') - amount);
 	}
 
-	increaseValuation (amount) {
+	increaseValuation (amount=0) {
 		this.set('valuation', this.get('valuation') + amount);
 	}
 
@@ -77,17 +77,11 @@ class Startup {
 	}
 
 	getAssetById (id) {
-		return _.find(this.get('assets'), function (asset) {
-			return asset.get('id') === id;
-		});
+		return _.find(this.get('assets'), (asset) => asset.get('id') === id);
 	}
 
 	nextTurn () {
-		this.get('assets').forEach(function (asset) {
-			// todo: fix this context
-			// todo: add unit test to check if context is even right
-			this.decreaseFunding(asset.get('perTurnCost'));
-		});
+		this.get('assets').forEach((asset) => this.decreaseFunding(asset.get('perTurnCost')));
 		this.increaseTurn(1);
 	}
 

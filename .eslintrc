@@ -1,0 +1,38 @@
+{
+	"extends": "eslint:recommended",
+	"env": {
+		"browser": true,
+		"node": true,
+		"jasmine": true,
+		"es6": true
+	},
+	"ecmaFeatures": {
+		"modules": true
+	},
+	"rules": {
+		"eqeqeq": 2,
+		"curly": 2,
+		"indent": 0,
+		"no-mixed-spaces-and-tabs": [2, "smart-tabs"],
+		"quotes": [2, "single"],
+		"camelcase": 2,
+		"curly": 2,
+		"no-use-before-define": 2,
+		"no-undef": 2,
+		"no-unused-vars": 2,
+		"no-unused-expressions": 2,
+		"max-depth": [2, 2],
+		"complexity": [2, 4],
+		"no-trailing-spaces": 1,
+		"comma-style": 1,
+		"brace-style": 1,
+		"max-nested-callbacks": [1, 4],
+		"no-lonely-if": 1,
+		"no-nested-ternary": 1,
+		"no-unneeded-ternary": 1,
+		"space-before-blocks": 1,
+		"space-before-function-paren": 1,
+		"dot-notation": 1,
+		"dot-location": [1, "property"]
+	}
+}
