@@ -69,7 +69,7 @@ class Startup {
 	}
 
 	manageAsset (assetId) {
-		let asset = this.getAssetById(id);
+		let asset = this.getAssetById(assetId);
 		// TODO: emit error if not found
 		if (asset) {
 			this.increaseValuation(asset.get('valuationPerTurn'));
@@ -78,13 +78,14 @@ class Startup {
 
 	getAssetById (id) {
 		return _.find(this.get('assets'), function (asset) {
-			return asset.get('id') === assetId;
+			return asset.get('id') === id;
 		});
 	}
 
 	nextTurn () {
 		this.get('assets').forEach(function (asset) {
 			// todo: fix this context
+			// todo: add unit test to check if context is even right
 			this.decreaseFunding(asset.get('perTurnCost'));
 		});
 		this.increaseTurn(1);
