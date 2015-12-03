@@ -1,6 +1,6 @@
 import Immutable from './utils/Immutable';
 import { FUNDING_ROUNDS } from './funding';
-import _ from 'lodash/index';
+import _ from 'lodash';
 
 class Startup {
 

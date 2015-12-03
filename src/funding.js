@@ -1,23 +1,19 @@
-'use strict';
-
 import Immutable from './utils/Immutable';
-import _ from 'lodash/index';
+import _ from 'lodash';
 
 const FUNDING_ROUNDS = ['Bootstrap', 'Seed', 'A', 'B', 'C', 'D'];
 
-// TODO: move to separate file
-let Funding = function (options) {
+class Funding {
+	constructor (options) {
+		this.attrs = Immutable.fromJS(_.extend({
+			amount: 0,
+			round: FUNDING_ROUNDS[1]
+		}, options));
 
-	let funding = {};
-
-	funding.attrs = Immutable.fromJS(_.extend({
-		amount: 0,
-		round: FUNDING_ROUNDS[1]
-	}, options));
-	funding.get = funding.attrs.get;
-	funding.set = funding.attrs.set;
-	return funding;
-};
+		this.get = this.attrs.get;
+		this.set = this.attrs.set;
+	}
+}
 
 export { FUNDING_ROUNDS, Funding };
 export default Funding;

@@ -1,8 +1,6 @@
-'use strict';
-
 import Startup from './startup';
 import { Funding, FUNDING_ROUNDS } from './funding';
-import { Asset, assets } from './asset';
+import { assets } from './asset';
 
 describe('startup init', function () {
 
@@ -77,7 +75,7 @@ describe('assets', function () {
 		});
 
 		startup.get('assets').forEach(function (asset) {
-			var expectedValuation = start.get('valuation') + asset.get('valuationPerTurn');
+			var expectedValuation = startup.get('valuation') + asset.get('valuationPerTurn');
 			startup.manageAsset(asset.get('id'));
 			expect(startup.get('valuation')).toEqual(expectedValuation);
 		});
@@ -109,7 +107,7 @@ describe('funding', function () {
 	it('series funding increases startup round', function () {
 		startup.set('round', 0);
 
-		FUNDING_ROUNDS.forEach(function (round, index, rounds) {
+		FUNDING_ROUNDS.forEach(function (round, index) {
 			var funding = new Funding({
 				round: round,
 				amount: 10

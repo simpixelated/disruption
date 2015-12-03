@@ -1,5 +1,4 @@
 // TODO: switch to real Immutable
-'use strict';
 
 import _ from 'lodash/index';
 

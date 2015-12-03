@@ -1,23 +1,16 @@
-'use strict';
-
 import Immutable from './utils/Immutable';
-import _ from 'lodash/index';
+import _ from 'lodash';
 
-/*
-example asset:
-TODO: move to own file
-*/
-let Asset = function (options) {
-	let asset = {};
-	
-	asset.attrs = Immutable.fromJS({
-		purchaseCost: 1000,
-		perTurnCost: 30,
-		valuationPerTurn: 30*4
-	});
-	asset.get = asset.attrs.get;
-	asset.set = asset.attrs.set;
-	return asset;
+class Asset {
+	constructor (options) {
+		this.attrs = Immutable.fromJS(_.extend({
+			purchaseCost: 1000,
+			perTurnCost: 30,
+			valuationPerTurn: 30*4
+		}, options));
+		this.get = this.attrs.get;
+		this.set = this.attrs.set;
+	}
 }
 
 let assets = [
